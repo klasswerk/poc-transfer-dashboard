@@ -1,16 +1,22 @@
 # poc-transfer-dashboard
 School POC project
 
+## Tech Talk
+
+My proposed tech talk will cover Kafka Streams. My project most likely does not needs the full power
+of Apache Spark and, while Spark is very promising, Kafka Streams should fit the project's needs.
+
+
 ## PROPOSAL
 
 ### Overview:
 
-My project is a Proof-of-Concent (POC) for an append log based dashboard system using a kakfa as the append log.
+My project is a Proof-of-Concept (POC) for an append log based dashboard system using a kakfa as the append log.
 The system would include stream processing for real-time dashboards as well as persisting the data for further
 reporting and analytics.  There would be a REST component to interact with the system.
 
 This is based off a real word issue we are having on with one of our productions systems, for which the system's
-throughput and performance are affected by its event loging.  I would like to do this POC to show we can offload
+throughput and performance are affected by its event logging.  I would like to do this POC to show we can offload
 the system's event logging onto a different system, which should help throughput.
 
 
@@ -40,5 +46,5 @@ and process everything within the Actor system, but I think I want two distinct 
 
 3.  Build REST component to interact with Cassandra
 
-I haven't nailed down the exact rolled up information I'd like to capture, as well as aniled down the exact REST API.
+I haven't nailed down the exact rolled up information I'd like to capture, as well as nailed down the exact REST API.
 
