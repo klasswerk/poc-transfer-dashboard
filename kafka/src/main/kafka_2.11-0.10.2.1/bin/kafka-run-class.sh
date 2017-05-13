@@ -47,6 +47,10 @@ should_include_file() {
 
 base_dir=$(dirname $0)/..
 
+# Change to base dir so that the project
+# can use relative paths to config files.
+cd $base_dir
+
 if [ -z "$SCALA_VERSION" ]; then
   SCALA_VERSION=2.10.6
 fi
