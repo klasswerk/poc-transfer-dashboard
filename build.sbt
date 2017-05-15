@@ -40,3 +40,20 @@ lazy val kafka = (project in file("kafka")).
     startKafka := Process(sourceDirectory.value + kafkaStart).!.toString,
     stopKafka := Process(sourceDirectory.value + kafkaStop).!.toString
   )
+
+val startCassandra = taskKey[String]("Start Cassandra")
+val stopCassandra = taskKey[String]("Stop Cassandra")
+
+val cassandraBinDir = "/main/apache-cassandra-3.10/bin/"
+
+val cassandraStart = cassandraBinDir + "cassandra"
+val cassandraStop = cassandraBinDir + "stop-server"
+
+lazy val cassandra = (project in file("cassandra")).
+  settings(
+    commonSettings,
+
+    name := "poc-cassandra",
+    startCassandra := Process(sourceDirectory.value + cassandraStart).!.toString,
+    stopCassandra := Process(sourceDirectory.value + cassandraStop).!.toString
+  )
