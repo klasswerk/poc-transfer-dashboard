@@ -8,3 +8,4 @@ target/
 # kafka subproject
 kafka/target/
 kafka/src/main/kafka_2.11-0.10.2.1/data/
+kafka/src/main/kafka_2.11-0.10.2.1/logs/
