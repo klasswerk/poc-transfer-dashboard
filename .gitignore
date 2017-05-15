@@ -9,3 +9,8 @@ target/
 kafka/target/
 kafka/src/main/kafka_2.11-0.10.2.1/data/
 kafka/src/main/kafka_2.11-0.10.2.1/logs/
+
+# cassandra subproject
+cassandra/target/
+cassandra/src/main/apache-cassandra-3.10/data/
+cassandra/src/main/apache-cassandra-3.10/logs/
