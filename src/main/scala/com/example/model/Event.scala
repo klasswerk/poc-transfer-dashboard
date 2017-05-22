@@ -39,5 +39,6 @@ case class Event(id: EventId,
                  partner: Partner,
                  timestamp: TimeStamp,
                  sendReceive: SendOrReceive,
+                 size: Int,
                  ackState: Option[AckState],
                  receiptFor: Option[EventId])
