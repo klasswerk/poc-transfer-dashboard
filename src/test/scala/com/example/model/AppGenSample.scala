@@ -5,10 +5,14 @@ package com.example.model
   */
 object AppGenSample extends App {
 
+  implicit def str2TimeStamp(x: String) : TimeStamp = {
+    TimeStamp(x)
+  }
+
   println("random partner info = [" + Generator.getRandomPartnerMetaInfo + "]")
-  println("random event = [" + Generator.getRandomEvent(TimeStamp("100")) + "]")
-  println("random event = [" + Generator.getRandomEvent(TimeStamp("101")) + "]")
-  println("random event = [" + Generator.getRandomEvent(TimeStamp("102")) + "]")
-  println("random event = [" + Generator.getRandomEvent(TimeStamp("103")) + "]")
-  println("random event = [" + Generator.getRandomEvent(TimeStamp("104")) + "]")
+  println("random event = [" + Generator.getRandomEvent("100") + "]")
+  println("random event = [" + Generator.getRandomEvent("101") + "]")
+  println("random event = [" + Generator.getRandomEvent("102") + "]")
+  println("random event = [" + Generator.getRandomEvent("103") + "]")
+  println("random event = [" + Generator.getRandomEvent("104") + "]")
 }

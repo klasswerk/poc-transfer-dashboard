@@ -23,6 +23,7 @@ package com.example.model
 
 case class EventId(id: String)
 case class Partner(name: String)
+
 case class TimeStamp(isoTime: String)
 
 sealed trait SendOrReceive
