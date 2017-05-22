@@ -63,4 +63,10 @@ object Generator {
       None
     )
   }
+
+  // TODO: need to fix timestamps first.
+
+  def generateEvents(start: TimeStamp, end: TimeStamp) = {
+
+  }
 }
