@@ -34,9 +34,9 @@ object Generator {
     }
   }
 
-  val partners = SamplePartners.getPartnerMetaInfo.toArray
+  val partners: Array[PartnerMetaInfo] = SamplePartners.getPartnerMetaInfo.toArray
 
-  def getRandomPartnerMetaInfo = {
+  def getRandomPartnerMetaInfo: PartnerMetaInfo = {
     partners(random.nextInt(partners.length))
   }
 
@@ -66,7 +66,7 @@ object Generator {
 
   // TODO: need to fix timestamps first.
 
-  def generateEvents(start: TimeStamp, end: TimeStamp) = {
+  def generateEvents(start: TimeStamp, end: TimeStamp): Unit = {
 
   }
 }
