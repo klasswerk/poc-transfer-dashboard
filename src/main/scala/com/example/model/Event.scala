@@ -36,7 +36,7 @@ sealed trait AckState
 object AckPending extends AckState
 object AckReceived extends AckState
 
-case class Event(id: EventId,
+case class Event(eventId: EventId,
                  partner: Partner,
                  timestamp: TimeStamp,
                  sendReceive: SendOrReceive,

@@ -1,5 +1,9 @@
 import Dependencies._
 
+resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
+
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.15"
+
 lazy val commonSettings = Seq(
   organization := "com.example",
   version := "0.1.0-SNAPSHOT",
