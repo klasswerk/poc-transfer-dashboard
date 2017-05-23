@@ -24,12 +24,12 @@ object Generator {
     def getPartnerMetaInfo: Seq[PartnerMetaInfo] = {
 
       List(
-        PartnerMetaInfo(Partner("SEA"), 50, true),
-        PartnerMetaInfo(Partner("LAX"), 50, false),
-        PartnerMetaInfo(Partner("YYZ"), 40, false),
-        PartnerMetaInfo(Partner("CDG"), 60, false),
-        PartnerMetaInfo(Partner("LHR"), 10, false),
-        PartnerMetaInfo(Partner("JFK"), 90, true)
+        PartnerMetaInfo(Partner("SEA"), 50, isSync = true),
+        PartnerMetaInfo(Partner("LAX"), 50, isSync = false),
+        PartnerMetaInfo(Partner("YYZ"), 40, isSync = false),
+        PartnerMetaInfo(Partner("CDG"), 60, isSync = false),
+        PartnerMetaInfo(Partner("LHR"), 10, isSync = false),
+        PartnerMetaInfo(Partner("JFK"), 90, isSync = true)
       )
     }
   }
