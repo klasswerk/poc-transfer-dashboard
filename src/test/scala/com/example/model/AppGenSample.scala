@@ -1,5 +1,7 @@
 package com.example.model
 
+import org.joda.time.DateTime
+import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 
 /**
@@ -7,8 +9,10 @@ import play.api.libs.json._
   */
 object AppGenSample extends App {
 
-  implicit def str2TimeStamp(x: String): TimeStamp = {
-    TimeStamp(x)
+  val fmt = ISODateTimeFormat.dateTime
+
+  implicit def str2TimeStamp(dt: DateTime): TimeStamp = {
+    TimeStamp(Time.dateTimeToString(dt))
   }
 
   implicit object AckFormat extends Format[AckState] {
@@ -50,21 +54,27 @@ object AppGenSample extends App {
   println("random partner info = [" + Generator.getRandomPartnerMetaInfo + "]")
 
   val events = List(
-    Generator.getRandomEvent("100"),
-    Generator.getRandomEvent("101"),
-    Generator.getRandomEvent("102"),
-    Generator.getRandomEvent("103"),
-    Generator.getRandomEvent("104"),
-    Generator.getRandomEvent("105")
+    Generator.getRandomEvent(DateTime.now),
+    Generator.getRandomEvent(DateTime.now),
+    Generator.getRandomEvent(DateTime.now),
+    Generator.getRandomEvent(DateTime.now),
+    Generator.getRandomEvent(DateTime.now),
+    Generator.getRandomEvent(DateTime.now)
   )
 
+  var strings: List[String] = Nil;
   events.foreach {
     e =>
+      val json = Json.toJson(e)
       println("random event = [" + e + "]")
-      println("JSON = [" + Json.toJson(e) + "]")
+      println("JSON = [" + json + "]")
+      strings = strings :+ (json.toString)
   }
 
-  val json1 = """{"eventId":{"id":"6"},"partner":{"name":"YYZ"},"timestamp":{"isoTime":"105"},"sendReceive":"Received","size":167592,"ackState":"AckPending"}"""
+  println("*******")
+  println(Json.fromJson[Event](Json.parse(strings.head)))
 
-  println(Json.fromJson[Event](Json.parse(json1)))
+  val start = TimeStamp("2017-05-25T00:00:00.000-07:00")
+  val end = TimeStamp("2017-05-26T00:00:15.000-07:00")
+  Generator.generateEvents(start, end)
 }

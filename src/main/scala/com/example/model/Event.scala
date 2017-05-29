@@ -1,5 +1,7 @@
 package com.example.model
 
+import org.joda.time.format.ISODateTimeFormat
+
 /**
   * Event modelled after our data transfer system.
   *
@@ -43,3 +45,15 @@ case class Event(eventId: EventId,
                  size: Int,
                  ackState: Option[AckState],
                  receiptFor: Option[EventId])
+
+object OrderingByTimeEvent extends Ordering[Event] {
+
+  override def compare(x: Event, y: Event): Int = {
+
+    val fmt = ISODateTimeFormat.dateTime
+
+    val a = fmt.parseDateTime(x.timestamp.isoTime)
+    val b = fmt.parseDateTime(y.timestamp.isoTime)
+    -a.compareTo(b)
+  }
+}

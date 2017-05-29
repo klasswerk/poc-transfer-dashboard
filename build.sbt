@@ -15,7 +15,7 @@ lazy val root = (project in file(".")).
    commonSettings,
 
     name := "poc-transfer-dashboard",
-    libraryDependencies ++= Seq(akkaActor, akkaTestkit % Test, scalaTest % Test)
+    libraryDependencies ++= Seq(akkaActor, jodaTime, akkaTestkit % Test, scalaTest % Test)
   )
 
 val startZookeeper = taskKey[String]("Start Zookeeper")

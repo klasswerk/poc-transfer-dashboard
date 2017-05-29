@@ -1,5 +1,7 @@
 package com.example.model
 
+import scala.collection.mutable
+
 /**
   * Simple generator to create some events.
   */
@@ -63,10 +65,60 @@ object Generator {
       None
     )
   }
-
+  
   // TODO: need to fix timestamps first.
 
   def generateEvents(start: TimeStamp, end: TimeStamp): Unit = {
 
+
+    var currentDt = Time.stringToDateTime(start.isoTime)
+    val endDt = Time.stringToDateTime(end.isoTime)
+
+    implicit val order: Ordering[Event] = OrderingByTimeEvent
+
+    val pq: mutable.PriorityQueue[Event] = new mutable.PriorityQueue[Event]()
+
+    // Any events in priority queue to catch up
+    var head:Option[Event] = pq.headOption
+
+    while (currentDt.isBefore(endDt)) {
+
+      head = pq.headOption
+      while(head.isDefined && !Time.stringToDateTime(head.get.timestamp.isoTime).isAfter(currentDt)) {
+        println(pq.dequeue())
+        head = pq.headOption
+      }
+
+      // New event
+      val event = getRandomEvent(TimeStamp(Time.dateTimeToString(currentDt)))
+
+      event match {
+        case s@Event(_, _, _, Send, _, Some(AckPending), None) =>
+          val newT = Time.stringToDateTime(s.timestamp.isoTime).plusSeconds(5 + random.nextInt(300))
+          val ts = TimeStamp(Time.dateTimeToString(newT))
+          val ack = Event(EventId("r" + s.eventId.id), s.partner, ts, Receive, 100, Some(AckReceived), Some(s.eventId))
+          pq += ack
+        case r@Event(_, _, _, Receive, _, Some(AckPending), None) =>
+          val newT = Time.stringToDateTime(r.timestamp.isoTime).plusSeconds(5 + random.nextInt(300))
+          val ts = TimeStamp(Time.dateTimeToString(newT))
+          val ack = Event(EventId("s" + r.eventId.id), r.partner, ts, Send, 100, Some(AckReceived), Some(r.eventId))
+          pq += ack
+        case _ =>
+      }
+
+      println(event)
+//      println("pq.size = " + pq.size)
+//      println(pq)
+
+      // Advance time
+      val seconds = 1 + random.nextInt(3)
+      currentDt = currentDt.plusSeconds(seconds)
+    }
+
+    head = pq.headOption
+    while(head.isDefined) {
+      println(pq.dequeue())
+      head = pq.headOption
+    }
   }
 }
