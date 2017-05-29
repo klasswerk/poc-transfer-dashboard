@@ -62,13 +62,13 @@ object AppGenSample extends App {
     Generator.getRandomEvent(DateTime.now)
   )
 
-  var strings: List[String] = Nil;
+  var strings: List[String] = Nil
   events.foreach {
     e =>
       val json = Json.toJson(e)
       println("random event = [" + e + "]")
       println("JSON = [" + json + "]")
-      strings = strings :+ (json.toString)
+      strings = strings :+ json.toString
   }
 
   println("*******")
