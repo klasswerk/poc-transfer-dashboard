@@ -71,8 +71,8 @@ object Generator {
   def generateEvents(start: TimeStamp, end: TimeStamp): Unit = {
 
 
-    var currentDt = Time.stringToDateTime(start.isoTime)
-    val endDt = Time.stringToDateTime(end.isoTime)
+    var currentDt = start.dt
+    val endDt = end.dt
 
     implicit val order: Ordering[Event] = OrderingByTimeEvent
 
@@ -84,23 +84,23 @@ object Generator {
     while (currentDt.isBefore(endDt)) {
 
       head = pq.headOption
-      while(head.isDefined && !Time.stringToDateTime(head.get.timestamp.isoTime).isAfter(currentDt)) {
+      while(head.isDefined && !head.get.timestamp.dt.isAfter(currentDt)) {
         println(pq.dequeue())
         head = pq.headOption
       }
 
       // New event
-      val event = getRandomEvent(TimeStamp(Time.dateTimeToString(currentDt)))
+      val event = getRandomEvent(TimeStamp(currentDt))
 
       event match {
         case s@Event(_, _, _, Send, _, Some(AckPending), None) =>
-          val newT = Time.stringToDateTime(s.timestamp.isoTime).plusSeconds(5 + random.nextInt(300))
-          val ts = TimeStamp(Time.dateTimeToString(newT))
+          val newT = s.timestamp.dt.plusSeconds(5 + random.nextInt(300))
+          val ts = TimeStamp(newT)
           val ack = Event(EventId("r" + s.eventId.id), s.partner, ts, Receive, 100, Some(AckReceived), Some(s.eventId))
           pq += ack
         case r@Event(_, _, _, Receive, _, Some(AckPending), None) =>
-          val newT = Time.stringToDateTime(r.timestamp.isoTime).plusSeconds(5 + random.nextInt(300))
-          val ts = TimeStamp(Time.dateTimeToString(newT))
+          val newT = r.timestamp.dt.plusSeconds(5 + random.nextInt(300))
+          val ts = TimeStamp(newT)
           val ack = Event(EventId("s" + r.eventId.id), r.partner, ts, Send, 100, Some(AckReceived), Some(r.eventId))
           pq += ack
         case _ =>

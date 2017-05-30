@@ -11,8 +11,21 @@ object AppGenSample extends App {
 
   val fmt = ISODateTimeFormat.dateTime
 
-  implicit def str2TimeStamp(dt: DateTime): TimeStamp = {
-    TimeStamp(Time.dateTimeToString(dt))
+  implicit def dt2TimeStamp(dt: DateTime): TimeStamp = {
+    TimeStamp(dt)
+  }
+
+  implicit object TimeStampFormat extends Format[TimeStamp] {
+    def reads(json: JsValue) =
+      json match {
+        case JsString(str) => JsSuccess(TimeStamp(Time.stringToDateTime(str)))
+        case _ => JsError("cannot parse it")
+      }
+
+    def writes(timestamp: TimeStamp) =
+      timestamp match {
+        case TimeStamp(dt) => JsString(Time.dateTimeToString(dt))
+      }
   }
 
   implicit object AckFormat extends Format[AckState] {
@@ -49,7 +62,6 @@ object AppGenSample extends App {
 
   implicit val eventIdFormat = Json.format[EventId]
   implicit val partnerFormat = Json.format[Partner]
-  implicit val timeStampFormat = Json.format[TimeStamp]
 
   implicit val eventFormat = Json.format[Event]
 
@@ -73,10 +85,11 @@ object AppGenSample extends App {
       strings = strings :+ json.toString
   }
 
+
   println("*******")
   println(Json.fromJson[Event](Json.parse(strings.head)))
 
-  val start = TimeStamp("2017-05-25T00:00:00.000-07:00")
-  val end = TimeStamp("2017-05-26T00:00:15.000-07:00")
+  val start = TimeStamp(Time.stringToDateTime("2017-05-25T00:00:00.000-07:00"))
+  val end = TimeStamp(Time.stringToDateTime("2017-05-26T00:00:15.000-07:00"))
   Generator.generateEvents(start, end)
 }

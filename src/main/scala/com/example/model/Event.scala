@@ -1,6 +1,6 @@
 package com.example.model
 
-import org.joda.time.format.ISODateTimeFormat
+import org.joda.time.DateTime
 
 /**
   * Event modelled after our data transfer system.
@@ -26,7 +26,7 @@ import org.joda.time.format.ISODateTimeFormat
 case class EventId(id: String)
 case class Partner(name: String)
 
-case class TimeStamp(isoTime: String)
+case class TimeStamp(dt: DateTime)
 
 sealed trait Action
 
@@ -51,10 +51,8 @@ object OrderingByTimeEvent extends Ordering[Event] {
 
   override def compare(x: Event, y: Event): Int = {
 
-    val fmt = ISODateTimeFormat.dateTime
-
-    val a = fmt.parseDateTime(x.timestamp.isoTime)
-    val b = fmt.parseDateTime(y.timestamp.isoTime)
+    val a = x.timestamp.dt
+    val b = y.timestamp.dt
     -a.compareTo(b)
   }
 }
