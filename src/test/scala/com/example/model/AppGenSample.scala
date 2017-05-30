@@ -30,18 +30,20 @@ object AppGenSample extends App {
     }
   }
 
-  implicit object SendOrReceiveFormat extends Format[SendOrReceive] {
+  implicit object ActionFormat extends Format[Action] {
     def reads(json: JsValue) =
       json match {
         case JsString("Send") => JsSuccess(Send)
         case JsString("Received") => JsSuccess(Receive)
+        case JsString("Error") => JsSuccess(Error)
         case _ => JsError("cannot parse it")
       }
 
-    def writes(sOrR: SendOrReceive) =
-      sOrR match {
+    def writes(action: Action) =
+      action match {
         case Send => JsString("Send")
         case Receive => JsString("Received")
+        case Error => JsString("Error")
       }
   }
 

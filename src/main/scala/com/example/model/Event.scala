@@ -28,10 +28,11 @@ case class Partner(name: String)
 
 case class TimeStamp(isoTime: String)
 
-sealed trait SendOrReceive
+sealed trait Action
 
-object Send extends SendOrReceive
-object Receive extends SendOrReceive
+object Send extends Action
+object Receive extends Action
+object Error extends Action
 
 sealed trait AckState
 
@@ -41,7 +42,7 @@ object AckReceived extends AckState
 case class Event(eventId: EventId,
                  partner: Partner,
                  timestamp: TimeStamp,
-                 sendReceive: SendOrReceive,
+                 action: Action,
                  size: Int,
                  ackState: Option[AckState],
                  receiptFor: Option[EventId])
