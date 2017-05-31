@@ -97,5 +97,5 @@ object AppGenSample extends App {
 
   val start = TimeStamp(Time.stringToDateTime("2017-05-25T00:00:00.000-07:00"))
   val end = TimeStamp(Time.stringToDateTime("2017-05-26T00:00:15.000-07:00"))
-  Generator.generateEvents(start, end)
+  Generator.generateEvents(start, end)(println _)
 }

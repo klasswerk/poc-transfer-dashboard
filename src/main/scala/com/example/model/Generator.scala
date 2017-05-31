@@ -69,7 +69,7 @@ object Generator {
   
   // TODO: need to fix timestamps first.
 
-  def generateEvents(start: TimeStamp, end: TimeStamp): Unit = {
+  def generateEvents(start: TimeStamp, end: TimeStamp)(f: Event => Unit): Unit = {
 
 
     var currentDt = start.dt
@@ -86,7 +86,7 @@ object Generator {
 
       head = pq.headOption
       while(head.isDefined && !head.get.timestamp.dt.isAfter(currentDt)) {
-        println(pq.dequeue())
+        f(pq.dequeue())
         head = pq.headOption
       }
 
@@ -107,7 +107,7 @@ object Generator {
         case _ =>
       }
 
-      println(event)
+      f(event)
 //      println("pq.size = " + pq.size)
 //      println(pq)
 
@@ -118,7 +118,7 @@ object Generator {
 
     head = pq.headOption
     while(head.isDefined) {
-      println(pq.dequeue())
+      f(pq.dequeue())
       head = pq.headOption
     }
   }
