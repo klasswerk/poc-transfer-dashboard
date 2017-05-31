@@ -9,5 +9,9 @@ object Dependencies {
 
   lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.0.0"
 
-  lazy val jodaTime = "joda-tine" %% "joda-time" % "2.9.9"
+  lazy val jodaTime = "joda-time" % "joda-time" % "2.9.9"
+
+  lazy val playJson = "com.typesafe.play" %% "play-json" % "2.5.15"
+
+  lazy val cakeKafkaClient = "net.cakesolutions" %% "scala-kafka-client" % "0.10.2.2"
 }

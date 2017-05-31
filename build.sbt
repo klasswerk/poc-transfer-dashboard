@@ -1,8 +1,7 @@
 import Dependencies._
 
 resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.15"
+resolvers += Resolver.bintrayRepo("cakesolutions", "maven")
 
 lazy val commonSettings = Seq(
   organization := "com.example",
@@ -15,7 +14,13 @@ lazy val root = (project in file(".")).
    commonSettings,
 
     name := "poc-transfer-dashboard",
-    libraryDependencies ++= Seq(akkaActor, jodaTime, akkaTestkit % Test, scalaTest % Test)
+    libraryDependencies ++= Seq(
+      akkaActor,
+      playJson,
+      jodaTime,
+      cakeKafkaClient,
+      akkaTestkit % Test,
+      scalaTest % Test)
   )
 
 val startZookeeper = taskKey[String]("Start Zookeeper")
