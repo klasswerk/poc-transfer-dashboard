@@ -4,6 +4,8 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 
+import scala.util.{Failure, Success, Try}
+
 /**
   * Simple example to illustrate events
   */
@@ -18,7 +20,11 @@ object AppGenSample extends App {
   implicit object TimeStampFormat extends Format[TimeStamp] {
     def reads(json: JsValue) =
       json match {
-        case JsString(str) => JsSuccess(TimeStamp(Time.stringToDateTime(str)))
+        case JsString(str) =>
+          Try(Time.stringToDateTime(str)) match {
+            case Success(dt) => JsSuccess(TimeStamp(dt))
+            case Failure(e) => JsError("parse error: " + e.getMessage)
+          }
         case _ => JsError("cannot parse it")
       }
 
