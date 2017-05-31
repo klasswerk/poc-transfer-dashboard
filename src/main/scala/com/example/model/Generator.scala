@@ -49,6 +49,7 @@ object Generator {
     val id = eventId.toString
     eventId = eventId + 1
 
+    // TODO: Add Errors
     val sendOrReceive = if (random.nextInt(101) <= partnerInfo.percentSendVsReceive) Send else Receive
 
     val size = 1024 + random.nextInt(200000)
