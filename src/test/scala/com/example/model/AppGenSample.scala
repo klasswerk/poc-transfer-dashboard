@@ -58,5 +58,5 @@ object AppGenSample extends App {
     }
   }
 
-  Generator.generateEvents(start, end)(loadSync(_))
+  Generator.generateEvents(start, end)(loadSync)
 }
