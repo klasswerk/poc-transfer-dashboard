@@ -13,15 +13,16 @@ import scala.concurrent.Future
   */
 object Loader {
 
-  val TOPIC = "loader.test"
+  val conf = ConfigFactory.load
+  val topic = conf.getString("kafka_loader.topic")
 
   val producer : KafkaProducer[String, String] = {
     val conf = ConfigFactory.load
-    KafkaProducer(Conf(conf, new StringSerializer(), new StringSerializer()))
+    KafkaProducer(Conf(conf.getConfig("kafka_loader.kafka_producer"), new StringSerializer(), new StringSerializer()))
   }
 
   def loadEvent(event: Event) : Future[RecordMetadata] = {
-    val record = KafkaProducerRecord(TOPIC, event.partner.toString, JsonCodex.eventToJson(event))
+    val record = KafkaProducerRecord(topic, event.partner.toString, JsonCodex.eventToJson(event))
     producer.send(record)
   }
 }
