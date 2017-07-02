@@ -16,9 +16,11 @@ lazy val root = (project in file(".")).
     name := "poc-transfer-dashboard",
     libraryDependencies ++= Seq(
       akkaActor,
+      akkaStream,
       playJson,
       jodaTime,
       cakeKafkaClient,
+      reactiveKafka,
       akkaTestkit % Test,
       scalaTest % Test)
   )
