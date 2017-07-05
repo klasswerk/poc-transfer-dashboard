@@ -18,7 +18,7 @@ class InfluxDBDriverSpec extends FlatSpec with Matchers {
         ("testDouble", 1.0),
         ("testLong", 1L),
         ("testString", "1"),
-        ("testBoolean", true)).toSeq
+        ("testBoolean", true))
 
     val tspoint = ExplicitTimeSeriesPoint(
       "test_measurement",
@@ -48,7 +48,7 @@ class InfluxDBDriverSpec extends FlatSpec with Matchers {
         ("testDouble", 1.0),
         ("testLong", 1L),
         ("testString", "1"),
-        ("testBoolean", true)).toSeq
+        ("testBoolean", true))
 
     val tspoint = ExplicitTimeSeriesPoint(
       "test_measurement",
