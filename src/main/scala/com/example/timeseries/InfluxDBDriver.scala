@@ -85,12 +85,7 @@ class InfluxDBDriver(host: String, port: Int, dbname: String) extends DBDriver {
     if (x)
       Future.successful(db)
     else {
-      val c_f = db.create()
-      for (
-        done <- c_f
-      ) yield {
-        db
-      }
+      db.create().map(_ => db)
     }).flatMap(identity)
 
   /*
