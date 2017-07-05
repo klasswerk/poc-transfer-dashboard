@@ -8,6 +8,7 @@ import com.paulgoldbaum.influxdbclient.{Database, InfluxDB, Point}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 /**
   *
@@ -92,12 +93,27 @@ class InfluxDBDriver(host: String, port: Int, dbname: String) extends DBDriver {
       }
     }).flatMap(identity)
 
+  /*
+  Insert
+   */
   override def insertPoint(tsPoint: TimeSeriesPoint): Future[Boolean] = {
 
-    db_future.map(_.write(InfluxDBDriver.buildPoint(tsPoint),
-                                 precision = InfluxDBDriver.buildPrecision(tsPoint))).flatMap(identity)
-  }
+    Try(InfluxDBDriver.buildPoint(tsPoint)) match {
+      case Failure(e) => Future.failed(e)
+      case Success(point) =>
 
+        Try(InfluxDBDriver.buildPrecision(tsPoint)) match {
+          case Failure(e) => Future.failed(e)
+          case Success(precis) =>
+
+            db_future.map(_.write(point, precision = precis)).flatMap(identity)
+        }
+      }
+    }
+
+  /*
+  Close
+   */
   override def close: Unit = {
     influxdb.close()
   }

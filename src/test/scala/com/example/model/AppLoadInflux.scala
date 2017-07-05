@@ -3,11 +3,8 @@ package com.example.model
 import java.util.concurrent.TimeUnit
 
 import com.example.timeseries.{ExplicitTimeSeriesPoint, InfluxDBDriver}
-import com.paulgoldbaum.influxdbclient.Parameter.Precision
-import com.paulgoldbaum.influxdbclient.{InfluxDB, Point}
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
 import scala.concurrent.duration._
 
 /**
@@ -19,8 +16,8 @@ object AppLoadInflux extends App {
 
   val tspoint = ExplicitTimeSeriesPoint(
     "readings",
-    Some(List(("sensor","2"))),
-    List(("temp", 33.0)),
+    Some(List(("sensor","8"))),
+    List(("temp", 30.0)),
     Some(System.currentTimeMillis()),
     TimeUnit.MILLISECONDS)
 
