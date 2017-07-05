@@ -13,6 +13,8 @@ object Dependencies {
 
   lazy val jodaTime = "joda-time" % "joda-time" % "2.9.9"
 
+  lazy val influxClient = "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.2"
+
   lazy val cakeKafkaClient = "net.cakesolutions" %% "scala-kafka-client" % "0.10.2.2"
   lazy val reactiveKafka = "com.typesafe.akka" %% "akka-stream-kafka" % "0.16"
 

@@ -19,6 +19,7 @@ lazy val root = (project in file(".")).
       akkaStream,
       playJson,
       jodaTime,
+      influxClient,
       cakeKafkaClient,
       reactiveKafka,
       akkaTestkit % Test,
