@@ -7,6 +7,8 @@ import akka.kafka.scaladsl.Consumer
 import akka.kafka.{ConsumerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
+import com.example.model.{Converter, JsonCodex}
+import com.example.timeseries.{ExplicitTimeSeriesPoint, InfluxDBDriver}
 import com.typesafe.config.ConfigFactory
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -25,6 +27,8 @@ object Graph extends App {
   implicit val ec = system.dispatcher
   implicit val materializer = ActorMaterializer()
 
+  val db = InfluxDBDriver("localhost", 8086, "events")
+
   def terminateWhenDone(result: Future[Done]): Unit = {
     result.onComplete {
       case Failure(e) =>
@@ -41,15 +45,18 @@ object Graph extends App {
     .withGroupId(conf.getString("kafka_graph.group.id"))
     .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
-  def printMsg(data: String): Future[Done] = {
-    println(s"Kafka Message: $data")
-    Future.successful(Done)
+  def processMessage(payload: String): Future[Done] = {
+
+    JsonCodex.jsonToEvent(payload) match {
+      case None => Future.failed(new RuntimeException("cannot convert JSON to Event"))
+      case Some(event) => db.insertPoint(Converter.buildTimeSeries(event)).map(_ => Done)
+    }
   }
 
   val done =
     Consumer.committableSource(consumerSettings, Subscriptions.topics(topic))
       .mapAsync(1) { msg =>
-        printMsg(msg.record.value).map(_ => msg.committableOffset)
+        processMessage(msg.record.value).map(_ => msg.committableOffset)
       }
       .batch(max = 20, first => CommittableOffsetBatch.empty.updated(first)) { (batch, elem) =>
         batch.updated(elem)
