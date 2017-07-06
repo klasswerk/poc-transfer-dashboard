@@ -12,8 +12,12 @@ trait DBDriver {
 
   def insertPoints(timeSeriesPoints: Seq[TimeSeriesPoint]) : Future[Boolean] = {
 
-    val future_seq = timeSeriesPoints.map(insertPoint)
-    Future.sequence(future_seq).map(_.foldLeft(true) { (e,acc) => e && acc} )
+    if (timeSeriesPoints.length == 1)
+      insertPoint(timeSeriesPoints.head)
+    else {
+      val future_seq = timeSeriesPoints.map(insertPoint)
+      Future.sequence(future_seq).map(_.foldLeft(true) { (e, acc) => e && acc })
+    }
   }
 
   def close()
