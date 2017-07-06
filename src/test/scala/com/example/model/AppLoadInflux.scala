@@ -16,8 +16,8 @@ object AppLoadInflux extends App {
 
   val tspoint = ExplicitTimeSeriesPoint(
     "readings",
-    Some(List(("sensor","8"))),
-    List(("temp", 30.0)),
+    Some(List(("sensor","3"))),
+    List(("temp", 27.0)),
     Some(System.currentTimeMillis()),
     TimeUnit.MILLISECONDS)
 
