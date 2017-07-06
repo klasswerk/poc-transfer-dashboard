@@ -16,7 +16,7 @@ trait DBDriver {
       insertPoint(timeSeriesPoints.head)
     else {
       val future_seq = timeSeriesPoints.map(insertPoint)
-      Future.sequence(future_seq).map(_.foldLeft(true) { (e, acc) => e && acc })
+      Future.sequence(future_seq).map(_.reduce { _ && _ })
     }
   }
 
