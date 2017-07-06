@@ -53,6 +53,7 @@ object Generator {
     val sendOrReceive = if (random.nextInt(101) <= partnerInfo.percentSendVsReceive) Send else Receive
 
     val size = 1024 + random.nextInt(200000)
+    val seconds = 3 + random.nextInt(25)
 
     val ackState = if (partnerInfo.isSync) None else Some(AckPending)
 
@@ -62,6 +63,7 @@ object Generator {
       timeStamp,
       sendOrReceive,
       size,
+      seconds,
       ackState,
       None
     )
@@ -94,15 +96,15 @@ object Generator {
       val event = getRandomEvent(TimeStamp(currentDt))
 
       event match {
-        case s@Event(_, _, _, Send, _, Some(AckPending), None) =>
+        case s@Event(_, _, _, Send, _, _, Some(AckPending), None) =>
           val newT = s.timestamp.dt.plusSeconds(5 + random.nextInt(300))
           val ts = TimeStamp(newT)
-          val ack = Event(EventId("r" + s.eventId.id), s.partner, ts, Receive, 100, Some(AckReceived), Some(s.eventId))
+          val ack = Event(EventId("r" + s.eventId.id), s.partner, ts, Receive, 100, 10, Some(AckReceived), Some(s.eventId))
           pq += ack
-        case r@Event(_, _, _, Receive, _, Some(AckPending), None) =>
+        case r@Event(_, _, _, Receive, _, _, Some(AckPending), None) =>
           val newT = r.timestamp.dt.plusSeconds(5 + random.nextInt(300))
           val ts = TimeStamp(newT)
-          val ack = Event(EventId("s" + r.eventId.id), r.partner, ts, Send, 100, Some(AckReceived), Some(r.eventId))
+          val ack = Event(EventId("s" + r.eventId.id), r.partner, ts, Send, 100, 10, Some(AckReceived), Some(r.eventId))
           pq += ack
         case _ =>
       }

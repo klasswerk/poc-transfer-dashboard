@@ -44,6 +44,7 @@ case class Event(eventId: EventId,
                  timestamp: TimeStamp,
                  action: Action,
                  size: Int,
+                 seconds: Int,
                  ackState: Option[AckState],
                  receiptFor: Option[EventId])
 

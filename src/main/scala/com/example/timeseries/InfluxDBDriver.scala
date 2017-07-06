@@ -107,6 +107,34 @@ class InfluxDBDriver(host: String, port: Int, dbname: String) extends DBDriver {
     }
 
   /*
+  Insert multiple points
+   */
+  override def insertPoints(tsPoints: Seq[TimeSeriesPoint]): Future[Boolean] = {
+
+    if (tsPoints.length == 1)
+      insertPoint(tsPoints(0))
+
+    else {
+      val points = tsPoints.map(p => Try(InfluxDBDriver.buildPoint(p)))
+      val good_points = points.collect { case Success(point) => point }
+
+      if (points.length != good_points.length)
+        Future.failed(new RuntimeException("Not all points are good"))
+      else {
+        val precision = tsPoints.map(p => Try(InfluxDBDriver.buildPrecision(p)))
+        val good_precis = precision.collect { case Success(prec) => prec }
+
+        val precis_set = good_precis.toSet
+
+        if (precis_set.size != 1)
+          Future.failed(new RuntimeException("All precisions must be the same"))
+        else
+          db_future.map(_.bulkWrite(good_points, precision = precis_set.head)).flatMap(identity)
+      }
+    }
+  }
+
+  /*
   Close
    */
   override def close: Unit = {
