@@ -52,9 +52,9 @@ object AppGenSample extends App {
 
     Await.result (insert, 10 second)
     insert.value match {
-      case Some (Success(_) ) => println ("Success called")
-      case Some (Failure(e) ) => println ("Insert into kafka failed: " + e)
-      case None => println ("Future not done")
+      case Some(Success(_)) => // No need to print on Success
+      case Some(Failure(e)) => println ("Insert into kafka failed: " + e)
+      case None             => println ("Future not done")
     }
   }
 
