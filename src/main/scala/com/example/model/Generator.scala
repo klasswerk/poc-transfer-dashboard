@@ -67,7 +67,7 @@ object Generator {
     )
   }
   
-  // TODO: need to fix timestamps first.
+  // TODO: look into fold rather than looping
 
   def generateEvents(start: TimeStamp, end: TimeStamp)(f: Event => Unit): Unit = {
 
@@ -108,8 +108,6 @@ object Generator {
       }
 
       f(event)
-//      println("pq.size = " + pq.size)
-//      println(pq)
 
       // Advance time
       val seconds = 1 + random.nextInt(3)
