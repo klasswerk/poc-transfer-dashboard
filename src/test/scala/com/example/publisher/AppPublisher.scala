@@ -1,11 +1,14 @@
 package com.example.publisher
 
+import com.example.metrics.MetricsPublisher
+
 /**
   *
   */
 object AppPublisher extends App {
 
-  new Publisher(_ => println("Publishing")).start
+  // new Publisher(MetricsPublisher.pubishMetrics).start
+  new Publisher(() => println("Called")).start
 
 }
 

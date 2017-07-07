@@ -7,16 +7,16 @@ import scala.concurrent.duration._
 /**
   * Publisher to process repeated actions
   */
-class Publisher(f: Any => Unit) {
+class Publisher(f: () => Unit) {
 
   val system = ActorSystem("Publisher")
 
   object Publish;
 
-  class PublishActor(p : Any => Unit) extends Actor {
+  class PublishActor(p : () => Unit) extends Actor {
 
     def receive = {
-      case Publish => f()
+      case Publish => p()
     }
   }
 
@@ -25,7 +25,7 @@ class Publisher(f: Any => Unit) {
   def start : Cancellable = {
     import system.dispatcher
     system.scheduler.schedule(
-      0 seconds,
+      3 seconds,
       15 seconds,
       publishActor,
       Publish
