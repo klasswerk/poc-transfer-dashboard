@@ -1,6 +1,6 @@
 package com.example.model
 
-import org.joda.time.DateTime
+import org.joda.time.{DateTime, DateTimeZone}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -21,7 +21,7 @@ class JsonCodexSpec extends FlatSpec with Matchers {
   val event = Event(
     EventId("1"),
     Partner("A"),
-    TimeStamp(new DateTime(2017, 1, 1, 13, 0, 0)),
+    TimeStamp(new DateTime(2017, 1, 1, 13, 0, 0, DateTimeZone.forID("America/Los_Angeles"))),
     Send,
     8192,
     1,
