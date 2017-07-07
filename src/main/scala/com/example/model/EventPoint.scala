@@ -7,7 +7,7 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
 /**
   *
   */
-object Converter {
+object EventPoint {
 
   private def tranferType(event: Event) =  {
     event match {

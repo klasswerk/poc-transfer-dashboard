@@ -7,7 +7,7 @@ import akka.kafka.scaladsl.Consumer
 import akka.kafka.{ConsumerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
-import com.example.model.{Converter, JsonCodex}
+import com.example.model.{EventPoint, JsonCodex}
 import com.example.timeseries.InfluxDBDriver
 import com.typesafe.config.ConfigFactory
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -50,7 +50,7 @@ object Graph extends App {
     JsonCodex.jsonToEvent(payload) match {
       case None => Future.failed(new RuntimeException("cannot convert JSON to Event"))
 
-      case Some(event) => db.insertPoints(Converter.buildTimeSeriesPoints(event)).map(_ => Done)
+      case Some(event) => db.insertPoints(EventPoint.buildTimeSeriesPoints(event)).map(_ => Done)
         /*
         Hook for db failures.  Currently a NO-OP.
          */
