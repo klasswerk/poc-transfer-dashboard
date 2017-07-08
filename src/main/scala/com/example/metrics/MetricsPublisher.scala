@@ -2,7 +2,6 @@ package com.example.metrics
 
 import com.example.timeseries.InfluxDBDriver
 
-import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
