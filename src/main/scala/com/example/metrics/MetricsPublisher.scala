@@ -12,18 +12,17 @@ object MetricsPublisher {
 
   val db = InfluxDBDriver("localhost", 8086, "jvm")
 
-  def pubishMetrics() = {
+  def publishMetrics() = {
 
     val points =
       Seq(
-        JvmHeapPoint.getJvmHeapPoint(),
-        PendingFinalizationCountPoint.getPendingFinalizationCountPoint(),
-        ThreadCountPoint.getThreadCountPoint()
+        JvmHeapPoint.getJvmHeapPoint,
+        PendingFinalizationCountPoint.getPendingFinalizationCountPoint,
+        ThreadCountPoint.getThreadCountPoint
       )
 
-    db.insertPoints(points).onComplete {
-      case Success(result) =>
-      case Failure(e) => println("Failed: " + e)
+    db.insertPoints(points).onFailure {
+      case e => println("Failed: " + e)
     }
   }
 }

@@ -25,5 +25,5 @@ object AppLoadInflux extends App {
 
   Await.result(bool_f, 7.seconds)
 
-  db.close
+  db.close()
 }

@@ -112,7 +112,7 @@ class InfluxDBDriver(host: String, port: Int, dbname: String) extends DBDriver {
   override def insertPoints(tsPoints: Seq[TimeSeriesPoint]): Future[Boolean] = {
 
     if (tsPoints.length == 1)
-      insertPoint(tsPoints(0))
+      insertPoint(tsPoints.head)
 
     else {
       val points = tsPoints.map(p => Try(InfluxDBDriver.buildPoint(p)))
@@ -137,7 +137,7 @@ class InfluxDBDriver(host: String, port: Int, dbname: String) extends DBDriver {
   /*
   Close
    */
-  override def close: Unit = {
+  override def close(): Unit = {
     influxdb.close()
   }
 }

@@ -9,7 +9,7 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object PendingFinalizationCountPoint {
 
-  def getPendingFinalizationCountPoint() : TimeSeriesPoint = {
+  def getPendingFinalizationCountPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =
       List(

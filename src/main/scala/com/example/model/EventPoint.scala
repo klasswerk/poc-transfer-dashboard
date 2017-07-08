@@ -9,7 +9,7 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object EventPoint {
 
-  private def tranferType(event: Event) =  {
+  private def transferType(event: Event) =  {
     event match {
       case Event(_, _, _, Send, _, _, None, _) => "send"
       case Event(_, _, _, Receive, _, _, None, _) => "receive"
@@ -27,7 +27,7 @@ object EventPoint {
       List(
         ("id", event.eventId.id),
         ("partner", event.partner.name),
-        ("type", tranferType(event)))
+        ("type", transferType(event)))
 
     val fields: Seq[(String, Any)] =
       List(
@@ -48,7 +48,7 @@ object EventPoint {
       List(
         ("id", event.eventId.id),
         ("partner", event.partner.name),
-        ("type", tranferType(event)))
+        ("type", transferType(event)))
 
     val fields: Seq[(String, Any)] =
       List(

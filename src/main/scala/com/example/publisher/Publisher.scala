@@ -11,7 +11,7 @@ class Publisher(f: () => Unit) {
 
   val system = ActorSystem("Publisher")
 
-  object Publish;
+  object Publish
 
   class PublishActor(p : () => Unit) extends Actor {
 

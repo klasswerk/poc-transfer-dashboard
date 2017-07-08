@@ -2,7 +2,6 @@ package com.example.metrics
 
 import java.util.concurrent.TimeUnit
 
-import com.example.model.EventPoint.tranferType
 import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
 
 /**
@@ -10,7 +9,7 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object JvmHeapPoint {
 
-  def getJvmHeapPoint() : TimeSeriesPoint = {
+  def getJvmHeapPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =
       List(
@@ -18,7 +17,7 @@ object JvmHeapPoint {
 
     val fields: Seq[(String, Any)] =
       List(
-        ("usage", Platform.getHeapMemory.get.toLong))
+        ("bytes", Platform.getHeapMemory.get))
 
     ExplicitTimeSeriesPoint(
       "heap",

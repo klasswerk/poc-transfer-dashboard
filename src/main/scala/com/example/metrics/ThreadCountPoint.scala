@@ -9,7 +9,7 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object ThreadCountPoint {
 
-  def getThreadCountPoint() : TimeSeriesPoint = {
+  def getThreadCountPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =
       List(
@@ -20,7 +20,7 @@ object ThreadCountPoint {
         ("count", Platform.getThreadCount.get.toLong))
 
     ExplicitTimeSeriesPoint(
-      "thread",
+      "threads",
       Some(tags),
       fields,
       // Some(System.currentTimeMillis()),
