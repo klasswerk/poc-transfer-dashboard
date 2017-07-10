@@ -4,11 +4,11 @@ import java.util.concurrent.TimeUnit
 
 import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
 
-/**
-  *
-  */
 object JvmHeapPoint {
 
+  /**
+    * Function to create a timeseries point for the JVM heap usage.
+    */
   def getJvmHeapPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =

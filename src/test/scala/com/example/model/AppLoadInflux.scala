@@ -8,7 +8,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 
 /**
-  * Simple example to illustrate events
+  * Insert one measurment into Influxdb.
   */
 object AppLoadInflux extends App {
 

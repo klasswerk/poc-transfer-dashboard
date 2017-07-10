@@ -11,6 +11,9 @@ class Publisher(f: () => Unit) {
 
   val system = ActorSystem("Publisher")
 
+  val initialWait = 3 seconds
+  val repeatWait = 15 seconds
+
   object Publish
 
   class PublishActor(p : () => Unit) extends Actor {
@@ -25,8 +28,8 @@ class Publisher(f: () => Unit) {
   def start : Cancellable = {
     import system.dispatcher
     system.scheduler.schedule(
-      3 seconds,
-      15 seconds,
+      initialWait,
+      repeatWait,
       publishActor,
       Publish
     )

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit
 import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
 
 /**
-  *
+  * Object to create timeseries points from Events.
   */
 object EventPoint {
 
@@ -21,6 +21,9 @@ object EventPoint {
   }
 
 
+  /**
+    * Create timeseries point for size from Events.
+    */
   def buildSizeTimeSeries(event: Event) : TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =
@@ -41,8 +44,10 @@ object EventPoint {
       None,
       TimeUnit.MILLISECONDS)
   }
-
-  def buildSecondTimeSeries(event: Event) : TimeSeriesPoint = {
+  /**
+    * Create timeseries point for seconds from Events.
+    */
+  def buildSecondsTimeSeries(event: Event) : TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =
       List(
@@ -63,7 +68,10 @@ object EventPoint {
       TimeUnit.MILLISECONDS)
   }
 
+  /**
+    * Create all timeseries for bulk insert.
+    */
   def buildTimeSeriesPoints(event: Event): Seq[TimeSeriesPoint] = {
-      List(buildSizeTimeSeries(event), buildSecondTimeSeries(event))
+      List(buildSizeTimeSeries(event), buildSecondsTimeSeries(event))
   }
 }

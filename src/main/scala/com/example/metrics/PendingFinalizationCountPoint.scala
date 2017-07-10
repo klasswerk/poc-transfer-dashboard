@@ -9,6 +9,10 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object PendingFinalizationCountPoint {
 
+  /**
+    * Function to create a timeseries point for the finalizer
+    * pending count in the JVM.
+    */
   def getPendingFinalizationCountPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =

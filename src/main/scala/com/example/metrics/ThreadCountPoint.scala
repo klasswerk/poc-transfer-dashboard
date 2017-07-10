@@ -9,6 +9,10 @@ import com.example.timeseries.{ExplicitTimeSeriesPoint, TimeSeriesPoint}
   */
 object ThreadCountPoint {
 
+  /**
+    * Function to create a timeseries point for the number of threads
+    * in the JVM.
+    */
   def getThreadCountPoint: TimeSeriesPoint = {
 
     val tags: Seq[(String, Any)] =

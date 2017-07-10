@@ -8,8 +8,19 @@ import scala.concurrent.Future
   */
 trait DBDriver {
 
+  /**
+    * Insert timeseries point into database.
+    */
   def insertPoint(timeSeriesPoint: TimeSeriesPoint) : Future[Boolean]
 
+  /**
+    * Insert a seq of timeseries points into the database.
+    *
+    * This is a default implementation which might make as many network
+    * trips as the length of the seq.  Some databases migth have a more
+    * efficient bulk write method and those implementations shouuld
+    * override this method.
+    */
   def insertPoints(timeSeriesPoints: Seq[TimeSeriesPoint]) : Future[Boolean] = {
 
     if (timeSeriesPoints.length == 1)
@@ -20,5 +31,8 @@ trait DBDriver {
     }
   }
 
+  /**
+    * Close database.
+    */
   def close()
 }

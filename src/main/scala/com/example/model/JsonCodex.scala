@@ -4,6 +4,9 @@ import play.api.libs.json._
 
 import scala.util.{Failure, Success, Try}
 
+/**
+  * Object to encode and decode Events to JSON (and vice versa).
+  */
 object JsonCodex {
 
   implicit object TimeStampFormat extends Format[TimeStamp] {

@@ -11,6 +11,9 @@ object MetricsPublisher {
 
   val db = InfluxDBDriver("localhost", 8086, "jvm")
 
+  /**
+    * Function publish timeseries points info db.
+    */
   def publishMetrics() = {
 
     val points =

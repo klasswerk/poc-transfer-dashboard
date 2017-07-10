@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 
 /**
-  *
+  * Object for time manipulation in Events.
   */
 object Time {
 

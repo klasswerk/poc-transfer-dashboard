@@ -7,7 +7,7 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 /**
-  * Created by ep on 6/30/17.
+  * Insert one event into kafka.
   */
 object AppLoaderSample extends App {
 

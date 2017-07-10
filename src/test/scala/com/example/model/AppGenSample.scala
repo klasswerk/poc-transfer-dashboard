@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 /**
-  * Simple example to illustrate events
+  * Generate sample Events.
   */
 object AppGenSample extends App {
 
