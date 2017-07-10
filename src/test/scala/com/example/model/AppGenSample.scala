@@ -43,8 +43,9 @@ object AppGenSample extends App {
   println("*******")
   println(JsonCodex.jsonToEvent(strings.head).getOrElse(Nil))
 
-  val start = TimeStamp(Time.stringToDateTime("2017-05-25T00:00:00.000-07:00"))
-  val end = TimeStamp(Time.stringToDateTime("2017-05-26T00:00:15.000-07:00"))
+  val now = DateTime.now()
+  val start = TimeStamp(now.minusHours(1))
+  val end = TimeStamp(now)
 
   def loadSync(event: Event) : Unit = {
 
