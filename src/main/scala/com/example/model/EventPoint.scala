@@ -28,7 +28,7 @@ object EventPoint {
 
     val tags: Seq[(String, Any)] =
       List(
-        ("id", event.eventId.id),
+        // ("id", event.eventId.id),
         ("partner", event.partner.name),
         ("type", transferType(event)))
 
@@ -40,8 +40,7 @@ object EventPoint {
       "transferred_bytes",
       Some(tags),
       fields,
-      // Some(System.currentTimeMillis()),
-      None,
+      Some(event.timestamp.dt.toDate.getTime),
       TimeUnit.MILLISECONDS)
   }
   /**
@@ -51,7 +50,7 @@ object EventPoint {
 
     val tags: Seq[(String, Any)] =
       List(
-        ("id", event.eventId.id),
+        // ("id", event.eventId.id),
         ("partner", event.partner.name),
         ("type", transferType(event)))
 
@@ -63,8 +62,7 @@ object EventPoint {
       "transfer_seconds",
       Some(tags),
       fields,
-      // Some(System.currentTimeMillis()),
-      None,
+      Some(event.timestamp.dt.toDate.getTime),
       TimeUnit.MILLISECONDS)
   }
 
