@@ -7,7 +7,9 @@ import akka.kafka.scaladsl.Consumer
 import akka.kafka.{ConsumerSettings, Subscriptions}
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Sink
+import com.example.metrics.MetricsPublisher
 import com.example.model.{EventPoint, JsonCodex}
+import com.example.publisher.Publisher
 import com.example.timeseries.InfluxDBDriver
 import com.typesafe.config.ConfigFactory
 import org.apache.kafka.clients.consumer.ConsumerConfig
@@ -57,6 +59,8 @@ object Graph extends App {
           .recover { case cause => throw new RuntimeException("Db insert failed", cause) }
     }
   }
+
+  val publisher = new Publisher(MetricsPublisher.publishMetrics).start
 
   val done =
     Consumer.committableSource(consumerSettings, Subscriptions.topics(topic))
