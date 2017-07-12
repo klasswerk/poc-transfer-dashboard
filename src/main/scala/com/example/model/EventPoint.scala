@@ -20,6 +20,16 @@ object EventPoint {
     }
   }
 
+  // Seed explicitly so the same random sequence is returned
+  val random = new scala.util.Random(123321)
+
+  def fuzzMilliseconds(millis: Long) : Long = {
+
+    val nanos = TimeUnit.NANOSECONDS.convert(millis, TimeUnit.MILLISECONDS)
+    val fuzz = random.nextInt(100000)
+
+    return nanos + fuzz
+  }
 
   /**
     * Create timeseries point for size from Events.
@@ -40,8 +50,8 @@ object EventPoint {
       "transferred_bytes",
       Some(tags),
       fields,
-      Some(event.timestamp.dt.toDate.getTime),
-      TimeUnit.MILLISECONDS)
+      Some(fuzzMilliseconds(event.timestamp.dt.toDate.getTime)),
+      TimeUnit.NANOSECONDS)
   }
   /**
     * Create timeseries point for seconds from Events.
@@ -62,8 +72,8 @@ object EventPoint {
       "transfer_seconds",
       Some(tags),
       fields,
-      Some(event.timestamp.dt.toDate.getTime),
-      TimeUnit.MILLISECONDS)
+      Some(fuzzMilliseconds(event.timestamp.dt.toDate.getTime)),
+      TimeUnit.NANOSECONDS)
   }
 
   /**
